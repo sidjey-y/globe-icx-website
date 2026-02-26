@@ -88,17 +88,31 @@ export default function LandingSurveyBlock({ onContinue }: LandingSurveyBlockPro
       <div
         style={{
           width: "min(92%, 1100px)",
+          minHeight: "min(440px, 55vh)",
           background: "#FFFFFF",
           borderRadius: "50px",
           boxShadow: "0px 15px 50px rgba(0, 0, 0, 0.22)",
-          padding: "clamp(20px, 3vw, 40px) clamp(16px, 3.5vw, 50px)",
+          padding: "clamp(24px, 3vw, 40px) clamp(20px, 3.5vw, 50px)",
           position: "relative",
           boxSizing: "border-box",
           marginBottom: "40px",
           textAlign: "center",
           zIndex: 1,
+          display: "flex",
+          flexDirection: "column",
+          overflow: "hidden",
         }}
       >
+        <div
+          style={{
+            flex: 1,
+            minHeight: 0,
+            display: "flex",
+            flexDirection: "column",
+            alignItems: "stretch",
+            justifyContent: "center",
+          }}
+        >
         {surveyStep === 2 ? (
           <div
             style={{
@@ -108,7 +122,6 @@ export default function LandingSurveyBlock({ onContinue }: LandingSurveyBlockPro
               justifyContent: "center",
               textAlign: "center",
               width: "100%",
-              minHeight: "500px",
               animation: "fadeIn 0.5s ease-out",
             }}
           >
@@ -164,13 +177,13 @@ export default function LandingSurveyBlock({ onContinue }: LandingSurveyBlockPro
             `}</style>
           </div>
         ) : (
-          <div style={{ animation: "fadeIn 0.4s ease-out" }}>
+          <div style={{ flex: 1, minHeight: 0, display: "flex", flexDirection: "column", justifyContent: "center", animation: "fadeIn 0.4s ease-out" }}>
             <div
               style={{
-                marginBottom: "30px",
+                marginBottom: "24px",
                 fontFamily: "'Poppins', sans-serif",
                 fontWeight: 800,
-                fontSize: "clamp(24px, 3vw, 30px)",
+                fontSize: "clamp(22px, 3vw, 28px)",
                 lineHeight: "1.3",
                 textAlign: "center",
                 color: "#1F2E8D",
@@ -217,11 +230,11 @@ export default function LandingSurveyBlock({ onContinue }: LandingSurveyBlockPro
                 autoFocus
                 style={{
                   width: "100%",
-                  height: "clamp(120px, 18vh, 160px)",
+                  height: "clamp(100px, 14vh, 140px)",
                   background: "#F2F2F5",
-                  borderRadius: "32px",
+                  borderRadius: "24px",
                   border: "none",
-                  padding: "25px",
+                  padding: "20px 25px",
                   fontFamily: "'Poppins', sans-serif",
                   fontSize: "clamp(18px, 2.5vw, 24px)",
                   color: "#1F2E8D",
@@ -233,23 +246,23 @@ export default function LandingSurveyBlock({ onContinue }: LandingSurveyBlockPro
               />
             </div>
 
-            <div style={{ width: "100%", display: "flex", flexDirection: "column", gap: "20px", marginTop: "22px" }}>
+            <div style={{ width: "100%", display: "flex", flexDirection: "column", gap: "16px", marginTop: "20px" }}>
               <style>{`.employee-id-input::placeholder { color: #6b6b80; opacity: 1; }`}</style>
               <input
                 className="employee-id-input"
                 type="text"
                 value={employeeInfo}
                 onChange={(e) => setEmployeeInfo(e.target.value)}
-                placeholder="Employee ID or Employee Email"
+                placeholder="Employee ID"
                 style={{
                   width: "100%",
-                  height: "72px",
+                  height: "clamp(56px, 10vh, 72px)",
                   background: "#F2F2F5",
                   borderRadius: "24px",
                   border: "none",
-                  padding: "0 25px",
+                  padding: "0 20px",
                   fontFamily: "'Poppins', sans-serif",
-                  fontSize: "20px",
+                  fontSize: "clamp(18px, 2.5vw, 20px)",
                   color: "#2F3FA3",
                   outline: "none",
                   textAlign: "center",
@@ -276,7 +289,7 @@ export default function LandingSurveyBlock({ onContinue }: LandingSurveyBlockPro
 
             <div
               style={{
-                marginTop: "30px",
+                marginTop: "24px",
                 display: "flex",
                 justifyContent: "flex-end",
                 gap: "clamp(10px, 2vw, 20px)",
@@ -368,6 +381,7 @@ export default function LandingSurveyBlock({ onContinue }: LandingSurveyBlockPro
             </div>
           </div>
         )}
+        </div>
       </div>
     </div>
   );
