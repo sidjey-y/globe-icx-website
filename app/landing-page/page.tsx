@@ -60,14 +60,11 @@ export default function LandingSurveyBlock({ onContinue }: LandingSurveyBlockPro
     setSurveyStep(0);
   }, [question, mounted]);
 
-  const canNext = seed && answer.trim().length > 0 && answer.trim().length <= 200;
-  const canSubmit = canNext && employeeInfo.trim().length > 0;
+  const canSubmit = !!seed && answer.trim().length > 0 && answer.trim().length <= 200 && employeeInfo.trim().length > 0;
 
   if (!mounted) return null;
 
-  const clearActive = answer.trim().length > 0;
-
-  const step1Title = "Wait! Before you go...";
+  const clearActive = answer.trim().length > 0 || employeeInfo.trim().length > 0;
 
   return (
     <div
@@ -94,7 +91,7 @@ export default function LandingSurveyBlock({ onContinue }: LandingSurveyBlockPro
           background: "#FFFFFF",
           borderRadius: "50px",
           boxShadow: "0px 15px 50px rgba(0, 0, 0, 0.22)",
-          padding: "clamp(40px, 6vw, 80px) clamp(30px, 7vw, 100px)",
+          padding: "clamp(20px, 3vw, 40px) clamp(16px, 3.5vw, 50px)",
           position: "relative",
           boxSizing: "border-box",
           marginBottom: "40px",
@@ -109,60 +106,33 @@ export default function LandingSurveyBlock({ onContinue }: LandingSurveyBlockPro
               flexDirection: "column",
               alignItems: "center",
               justifyContent: "center",
-              minHeight: "350px",
+              textAlign: "center",
+              width: "100%",
+              minHeight: "500px",
               animation: "fadeIn 0.5s ease-out",
             }}
           >
-            <h2
+            <span
               style={{
-                color: DARK_BLUE,
-                fontSize: "clamp(32px, 5vw, 64px)",
+                fontFamily: "'Poppins', sans-serif",
                 fontWeight: 800,
-                margin: "0 0 20px 0",
-                fontFamily: "'Poppins', sans-serif",
+                fontSize: "clamp(32px, 5vw, 64px)",
+                color: DARK_BLUE,
               }}
             >
-              Thank you for answering!
-            </h2>
-            <p
-              style={{
-                color: "#666",
-                fontSize: "clamp(18px, 2.5vw, 24px)",
-                fontFamily: "'Poppins', sans-serif",
-                marginBottom: "40px",
-              }}
-            >
-              Your feedback helps us make your experience even better.
-            </p>
+              Click below
+            </span>
 
             <div
               style={{
-                display: "flex",
-                flexDirection: "column",
-                alignItems: "center",
-                gap: "10px",
+                fontSize: "48px",
+                color: DARK_BLUE,
+                animation: "bounce 1.5s infinite",
+                fontWeight: 900,
+                marginTop: "16px",
               }}
             >
-              <span
-                style={{
-                  fontFamily: "'Poppins', sans-serif",
-                  fontWeight: 700,
-                  fontSize: "28px",
-                  color: DARK_BLUE,
-                }}
-              >
-                Answer iCX now!
-              </span>
-              <div
-                style={{
-                  fontSize: "48px",
-                  color: DARK_BLUE,
-                  animation: "bounce 1.5s infinite",
-                  fontWeight: 900,
-                }}
-              >
-                ↓
-              </div>
+              ↓
             </div>
 
             <style jsx>{`
@@ -189,199 +159,6 @@ export default function LandingSurveyBlock({ onContinue }: LandingSurveyBlockPro
                 }
                 60% {
                   transform: translateY(-10px);
-                }
-              }
-            `}</style>
-          </div>
-        ) : surveyStep === 1 ? (
-          <div style={{ animation: "fadeIn 0.4s ease-out" }}>
-            <div
-              style={{
-                marginBottom: "30px",
-                fontFamily: "'Poppins', sans-serif",
-                fontWeight: 800,
-                fontSize: "clamp(24px, 3vw, 30px)",
-                lineHeight: "1.3",
-                textAlign: "center",
-                color: "#1F2E8D",
-              }}
-            >
-              {step1Title.split("").map((ch, i) => (
-                <span
-                  key={i}
-                  style={{
-                    display: "inline-block",
-                    animation: `letterBounce 520ms cubic-bezier(0.2, 0.9, 0.2, 1) ${i * 28}ms 1 both`,
-                  }}
-                >
-                  {ch === " " ? "\u00A0" : ch}
-                </span>
-              ))}
-            </div>
-            <p
-              style={{
-                color: "#666",
-                fontSize: "18px",
-                fontFamily: "'Poppins', sans-serif",
-                marginBottom: "30px",
-              }}
-            >
-              Lock in your ID number and you're all set!
-            </p>
-
-            <div style={{ width: "100%", display: "flex", flexDirection: "column", gap: "20px" }}>
-              <style>{`.employee-id-input::placeholder { color: #6b6b80; opacity: 1; }`}</style>
-              <input
-                className="employee-id-input"
-                type="text"
-                value={employeeInfo}
-                onChange={(e) => setEmployeeInfo(e.target.value)}
-                placeholder="Employee ID"
-                autoFocus
-                style={{
-                  width: "100%",
-                  height: "72px",
-                  background: "#F2F2F5",
-                  borderRadius: "24px",
-                  border: "none",
-                  padding: "0 25px",
-                  fontFamily: "'Poppins', sans-serif",
-                  fontSize: "20px",
-                  color: "#2F3FA3",
-                  outline: "none",
-                  textAlign: "center",
-                  boxSizing: "border-box",
-                }}
-              />
-            </div>
-
-            {submitError && (
-              <div
-                role="alert"
-                style={{
-                  marginTop: "16px",
-                  width: "100%",
-                  color: "#DC3545",
-                  fontSize: "14px",
-                  fontFamily: "'Poppins', sans-serif",
-                  textAlign: "center",
-                }}
-              >
-                {submitError}
-              </div>
-            )}
-
-            <div
-              style={{
-                marginTop: "40px",
-                display: "flex",
-                justifyContent: "flex-end",
-                gap: "15px",
-              }}
-            >
-              <button
-                type="button"
-                onClick={() => setSurveyStep(0)}
-                style={{
-                  width: "min(100%, 190px)",
-                  height: "56px",
-                  background: "#1F2E8D",
-                  borderRadius: "100px",
-                  fontFamily: "'Poppins', sans-serif",
-                  fontWeight: 700,
-                  fontSize: "18px",
-                  color: "#FFFFFF",
-                  border: "none",
-                  cursor: "pointer",
-                  boxShadow: "0 10px 26px rgba(31, 46, 141, 0.28)",
-                  transition: "transform 0.12s ease, box-shadow 0.18s ease, filter 0.18s ease",
-                }}
-                onMouseDown={(e) => (e.currentTarget.style.transform = "translateY(1px) scale(0.99)")}
-                onMouseUp={(e) => (e.currentTarget.style.transform = "translateY(0px) scale(1)")}
-                onMouseLeave={(e) => (e.currentTarget.style.transform = "translateY(0px) scale(1)")}
-              >
-                Back
-              </button>
-              <button
-                type="button"
-                onClick={async () => {
-                  if (!canSubmit || submitting) return;
-                  setSubmitting(true);
-                  setSubmitError(null);
-                  try {
-                    const res = await fetch("/api/answers", {
-                      method: "POST",
-                      headers: { "Content-Type": "application/json" },
-                      body: JSON.stringify({
-                        seed,
-                        questionIndex,
-                        questionText: question,
-                        answerText: answer.trim(),
-                        employeeInfo: employeeInfo.trim(),
-                      }),
-                    });
-                    const data = await res.json().catch(() => ({}));
-                    if (res.ok) {
-                      setSurveyStep(2);
-                    } else {
-                      setSubmitError(data?.error ?? "Failed to save. Please try again.");
-                    }
-                  } catch (e) {
-                    console.error(e);
-                    setSubmitError("Network error. Please try again.");
-                  } finally {
-                    setSubmitting(false);
-                  }
-                }}
-                disabled={!canSubmit || submitting}
-                style={{
-                  width: "min(100%, 190px)",
-                  height: "56px",
-                  background: canSubmit
-                    ? "linear-gradient(135deg, rgba(31,46,141,0.95) 0%, rgba(88,64,193,0.92) 55%, rgba(40,43,213,0.9) 100%)"
-                    : "#BDBDBD",
-                  borderRadius: "100px",
-                  fontFamily: "'Poppins', sans-serif",
-                  fontWeight: 700,
-                  fontSize: "18px",
-                  color: "#FFFFFF",
-                  border: "none",
-                  cursor: canSubmit ? "pointer" : "not-allowed",
-                  boxShadow: canSubmit ? "0 12px 30px rgba(31, 46, 141, 0.35)" : "none",
-                  filter: canSubmit ? "saturate(1.08) brightness(1.02)" : "none",
-                  transition: "opacity 0.2s, transform 0.12s ease, box-shadow 0.18s ease, filter 0.18s ease",
-                }}
-                onMouseDown={(e) => canSubmit && !submitting && (e.currentTarget.style.transform = "translateY(1px) scale(0.99)")}
-                onMouseUp={(e) => (e.currentTarget.style.transform = "translateY(0) scale(1)")}
-                onMouseLeave={(e) => (e.currentTarget.style.transform = "translateY(0) scale(1)")}
-              >
-                {submitting ? "..." : "Submit"}
-              </button>
-            </div>
-
-            <style jsx>{`
-              @keyframes fadeIn {
-                from {
-                  opacity: 0;
-                  transform: translateY(10px);
-                }
-                to {
-                  opacity: 1;
-                  transform: translateY(0);
-                }
-              }
-              @keyframes letterBounce {
-                0% {
-                  transform: translateY(0);
-                }
-                45% {
-                  transform: translateY(-8px);
-                }
-                70% {
-                  transform: translateY(2px);
-                }
-                100% {
-                  transform: translateY(0);
                 }
               }
             `}</style>
@@ -456,6 +233,47 @@ export default function LandingSurveyBlock({ onContinue }: LandingSurveyBlockPro
               />
             </div>
 
+            <div style={{ width: "100%", display: "flex", flexDirection: "column", gap: "20px", marginTop: "22px" }}>
+              <style>{`.employee-id-input::placeholder { color: #6b6b80; opacity: 1; }`}</style>
+              <input
+                className="employee-id-input"
+                type="text"
+                value={employeeInfo}
+                onChange={(e) => setEmployeeInfo(e.target.value)}
+                placeholder="Employee ID or Employee Email"
+                style={{
+                  width: "100%",
+                  height: "72px",
+                  background: "#F2F2F5",
+                  borderRadius: "24px",
+                  border: "none",
+                  padding: "0 25px",
+                  fontFamily: "'Poppins', sans-serif",
+                  fontSize: "20px",
+                  color: "#2F3FA3",
+                  outline: "none",
+                  textAlign: "center",
+                  boxSizing: "border-box",
+                }}
+              />
+            </div>
+
+            {submitError && (
+              <div
+                role="alert"
+                style={{
+                  marginTop: "16px",
+                  width: "100%",
+                  color: "#DC3545",
+                  fontSize: "14px",
+                  fontFamily: "'Poppins', sans-serif",
+                  textAlign: "center",
+                }}
+              >
+                {submitError}
+              </div>
+            )}
+
             <div
               style={{
                 marginTop: "30px",
@@ -466,7 +284,10 @@ export default function LandingSurveyBlock({ onContinue }: LandingSurveyBlockPro
             >
               <button
                 type="button"
-                onClick={() => setAnswer("")}
+                onClick={() => {
+                  setAnswer("");
+                  setEmployeeInfo("");
+                }}
                 style={{
                   width: "min(100%, 190px)",
                   height: "56px",
@@ -491,13 +312,41 @@ export default function LandingSurveyBlock({ onContinue }: LandingSurveyBlockPro
 
               <button
                 type="button"
-                onClick={() => canNext && setSurveyStep(1)}
-                disabled={!canNext}
+                onClick={async () => {
+                  if (!canSubmit || submitting) return;
+                  setSubmitting(true);
+                  setSubmitError(null);
+                  try {
+                    const res = await fetch("/api/answers", {
+                      method: "POST",
+                      headers: { "Content-Type": "application/json" },
+                      body: JSON.stringify({
+                        seed,
+                        questionIndex,
+                        questionText: question,
+                        answerText: answer.trim(),
+                        employeeInfo: employeeInfo.trim(),
+                      }),
+                    });
+                    const data = await res.json().catch(() => ({}));
+                    if (res.ok) {
+                      setSurveyStep(2);
+                    } else {
+                      setSubmitError(data?.error ?? "Failed to save. Please try again.");
+                    }
+                  } catch (e) {
+                    console.error(e);
+                    setSubmitError("Network error. Please try again.");
+                  } finally {
+                    setSubmitting(false);
+                  }
+                }}
+                disabled={!canSubmit || submitting}
                 style={{
                   width: "min(100%, 190px)",
                   height: "56px",
-                  background: canNext
-                    ? "linear-gradient(135deg, rgba(31,46,141,0.95) 0%, rgba(88,64,193,0.9) 55%, rgba(40,43,213,0.88) 100%)"
+                  background: canSubmit
+                    ? "linear-gradient(135deg, rgba(31,46,141,0.95) 0%, rgba(88,64,193,0.92) 55%, rgba(40,43,213,0.9) 100%)"
                     : "#BDBDBD",
                   borderRadius: "100px",
                   fontFamily: "'Poppins', sans-serif",
@@ -505,16 +354,16 @@ export default function LandingSurveyBlock({ onContinue }: LandingSurveyBlockPro
                   fontSize: "18px",
                   color: "#FFFFFF",
                   border: "none",
-                  cursor: canNext ? "pointer" : "not-allowed",
-                  boxShadow: canNext ? "0 12px 30px rgba(31, 46, 141, 0.35)" : "none",
-                  filter: canNext ? "saturate(1.08) brightness(1.02)" : "none",
+                  cursor: canSubmit ? "pointer" : "not-allowed",
+                  boxShadow: canSubmit ? "0 12px 30px rgba(31, 46, 141, 0.35)" : "none",
+                  filter: canSubmit ? "saturate(1.08) brightness(1.02)" : "none",
                   transition: "opacity 0.2s, transform 0.12s ease, box-shadow 0.18s ease, filter 0.18s ease",
                 }}
-                onMouseDown={(e) => canNext && (e.currentTarget.style.transform = "translateY(1px) scale(0.99)")}
+                onMouseDown={(e) => canSubmit && !submitting && (e.currentTarget.style.transform = "translateY(1px) scale(0.99)")}
                 onMouseUp={(e) => (e.currentTarget.style.transform = "translateY(0) scale(1)")}
                 onMouseLeave={(e) => (e.currentTarget.style.transform = "translateY(0) scale(1)")}
               >
-                Next
+                {submitting ? "..." : "Submit"}
               </button>
             </div>
           </div>
