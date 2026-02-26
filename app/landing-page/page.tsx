@@ -236,7 +236,7 @@ export default function LandingSurveyBlock({ onContinue }: LandingSurveyBlockPro
                 type="text"
                 value={employeeInfo}
                 onChange={(e) => setEmployeeInfo(e.target.value)}
-                placeholder="Employee ID or Employee Email"
+                placeholder="Employee ID"
                 autoFocus
                 style={{
                   width: "100%",
