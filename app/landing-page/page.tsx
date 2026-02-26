@@ -120,7 +120,7 @@ export default function LandingSurveyBlock({ onContinue }: LandingSurveyBlockPro
                 color: DARK_BLUE,
               }}
             >
-              Answer iCX Now
+              Click below
             </span>
 
             <div
